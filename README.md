@@ -69,9 +69,8 @@ from 12 recording days it never trained on.
   calls.
 - **Two scoring rules.** Under the *species rule* the model must pick one of
   the seven species, and the 90% above is how often it picks the right one.
-  The stricter *exact rule* also counts a hedged, less specific answer as a
-  miss. We report both. Killer whales
-  were scored on the three labelled ecotypes (91 calls).
+  The stricter *exact rule* requires the most specific correct label. We
+  report both. Killer whales were scored on the three labelled ecotypes (91 calls).
 
 ### Conch vs Perch 2.0
 
@@ -95,8 +94,7 @@ Per species, exact rule (share of each species' test calls named right):
 
 Conch is ahead on every species and under every rule. Perch 2.0 was built
 mostly from bird and land-animal recordings; it is close on humpback and sperm
-whales and falls furthest behind on the dolphins and the fin whale. Conch was
-built for marine calls from the start.
+whales and falls furthest behind on the dolphins and the fin whale.
 
 Killer whales are the hard case for both models: their calls overlap with the
 dolphins', and only a small number of test calls carry an ecotype label. We
@@ -567,8 +565,8 @@ Set `audioUrl` on detections. `usePlayback()` already plays real audio with
 `new Audio(audioUrl)`: it tracks `currentTime`, stops at `clipSeconds` or when
 the file ends, and resets on a playback error. The audio host must allow the
 dashboard's origin (CORS) if it is on another domain. Thumbnails, if any, are
-served at `spectrograms/<id>.webp` next to the app for non-simulated `h-*`
-history rows; never commit them here.
+served at `spectrograms/<id>.webp` next to the app for history rows; never
+commit them here.
 
 ### Step 7: remove sample labels
 

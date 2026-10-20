@@ -39,7 +39,7 @@ function init(): State {
 function add(state: State, detection: Detection, keep: number, now: number, fromPool: boolean): State {
   if (state.detections.some((d) => d.id === detection.id)) return state;
   const all = [detection, ...state.detections].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-  // Archived detections (ids "h-*") stay at the bottom of the list; new arrivals never push them out.
+  // Archived detections stay at the bottom of the list; new arrivals never push them out.
   const archive = all.filter(isArchive);
   const detections = [...all.filter((d) => !isArchive(d)).slice(0, Math.max(0, keep - archive.length)), ...archive];
   const kept = new Set(detections.map((d) => d.id));

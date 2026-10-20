@@ -1,0 +1,116 @@
+/* Month strip under the month line: one series, the chosen month in the primary colour. */
+.month-strip {
+  padding: 10px 12px 6px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-control);
+  background: var(--panel);
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.month-strip__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.month-strip__title {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.month-strip__total {
+  flex: none;
+  color: var(--ink-2);
+  font-size: 12px;
+}
+
+.month-strip__plot {
+  position: relative;
+}
+
+.month-strip__plot svg {
+  display: block;
+  width: 100%;
+  height: 92px;
+  overflow: visible;
+}
+
+.month-strip__base {
+  stroke: var(--hairline);
+  stroke-width: 0.4;
+}
+
+.month-strip__hit {
+  fill: transparent;
+}
+
+.month-strip__fill {
+  fill: #8a9cb1;
+  transition: fill 0.12s;
+}
+
+.month-strip__bar {
+  cursor: pointer;
+  outline: none;
+}
+
+.month-strip__bar:hover .month-strip__fill,
+.month-strip__bar:focus-visible .month-strip__fill {
+  fill: #5f7f9d;
+}
+
+.month-strip__bar.is-active .month-strip__fill,
+.month-strip__bar.is-active:hover .month-strip__fill {
+  fill: var(--primary);
+}
+
+.month-strip__bar:focus-visible .month-strip__hit {
+  stroke: var(--primary);
+  stroke-width: 0.6;
+  stroke-dasharray: 1.2 0.8;
+}
+
+/* SVG text is in viewBox units (100 wide), so these sizes scale with the panel width. */
+.month-strip__month {
+  font: 500 3.6px var(--font-body);
+  fill: var(--ink-2);
+}
+
+.month-strip__bar.is-active .month-strip__month {
+  font-weight: 700;
+  fill: var(--ink);
+}
+
+.month-strip__value {
+  font: 700 3.8px var(--font-body);
+  fill: var(--ink);
+}
+
+.month-strip__tip {
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -100%);
+  padding: 6px 9px;
+  border-radius: var(--radius-control);
+  background: var(--ink);
+  color: var(--panel);
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 4px 14px rgba(19, 40, 58, 0.2);
+  z-index: 5;
+}
+
+.month-strip__tip b {
+  display: block;
+}
+
+.month-strip__tip span {
+  opacity: 0.85;
+}

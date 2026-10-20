@@ -1,0 +1,16 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.DS_Store
+.env
+.env.*
+
+# never ship audio, thumbnails or model files from the public repo
+public/audio/
+public/spectrograms/
+*.wav
+*.flac
+*.mp3
+*.pt
+*.onnx
+*.tflite

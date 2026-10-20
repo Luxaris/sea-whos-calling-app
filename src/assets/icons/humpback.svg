@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256"><g transform="translate(128 128) scale(1.06) translate(-140 -130)">
+<defs><clipPath id="hb"><path d="M 30 116 C 30 96 66 88 110 92 C 152 96 180 110 204 102 C 210 100 214 96 216 92 L 220 98 C 206 122 182 144 140 150 C 94 156 30 150 30 116 Z"/></clipPath></defs>
+<path d="M 214 96 C 218 82 224 72 232 64 C 232 76 230 86 226 92 C 236 90 244 94 250 100 C 240 102 228 102 218 100 Z" fill="#111111"/>
+<path d="M 158 102 C 164 96 170 92 178 90 C 176 96 176 102 180 108 Z" fill="#111111"/>
+<path d="M 30 116 C 30 96 66 88 110 92 C 152 96 180 110 204 102 C 210 100 214 96 216 92 L 220 98 C 206 122 182 144 140 150 C 94 156 30 150 30 116 Z" fill="#111111"/>
+<g clip-path="url(#hb)">
+  <path d="M 22 116 C 56 124 100 132 156 148 L 156 180 L 22 180 Z" fill="#ffffff"/>
+  <path d="M 36 126 C 66 133 98 140 132 148" stroke="#111111" stroke-width="2" fill="none"/>
+  <path d="M 44 133 C 72 139 100 145 128 152" stroke="#111111" stroke-width="2" fill="none"/>
+  <path d="M 54 140 C 80 145 104 150 124 155" stroke="#111111" stroke-width="2" fill="none"/>
+</g>
+<path d="M 30 116 C 30 96 66 88 110 92 C 152 96 180 110 204 102 C 210 100 214 96 216 92 L 220 98 C 206 122 182 144 140 150 C 94 156 30 150 30 116 Z" fill="none" stroke="#111111" stroke-width="3" stroke-linejoin="round"/>
+<path d="M 100 146 C 92 166 100 184 116 196 C 118 180 118 162 114 148 Z" fill="#111111"/>
+<path d="M 82 148 C 76 160 80 170 88 176 C 90 166 90 156 88 148 Z" fill="#111111"/>
+<circle cx="66" cy="108" r="2.6" fill="#ffffff"/>
+</g></svg>

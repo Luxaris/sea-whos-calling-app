@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Repo rules, checked on every commit. Enable once per clone:  git config core.hooksPath hooks
+#  - no audio, model or dataset files; nothing over 1 MB
+#  - no cloud keys
+#  - optional: no word from .git/info/private-words (a local, untracked list; one regex per line)
+set -euo pipefail
+
+MAX_KB=1024
+WORDS_FILE="$(git rev-parse --git-dir)/info/private-words"
+WORDS=''
+[ -f "$WORDS_FILE" ] && WORDS=$(grep -v '^[[:space:]]*$' "$WORDS_FILE" | paste -sd '|' -)
+fail=0
+
+while IFS= read -r -d '' f; do
+  case "$f" in
+    *.wav|*.flac|*.mp3|*.ogg|*.webp|*.zip|*.npy|*.npz|*.parquet|*.h5|*.pt|*.pth|*.ckpt|*.onnx|*.safetensors|*.pkl|*.tflite)
+      echo "blocked: $f (audio, image, data and model files do not belong in this repo)"; fail=1 ;;
+  esac
+
+  kb=$(( $(git cat-file -s ":$f") / 1024 ))
+  [ "$kb" -le "$MAX_KB" ] || { echo "blocked: $f is ${kb} KB (max ${MAX_KB} KB)"; fail=1; }
+
+  [ "$f" = hooks/pre-commit ] || if git show ":$f" | grep -qE 'aws_secret_access_ke[y]|AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{30,}|github_pat_'; then
+    echo "blocked: $f looks like it contains a key"; fail=1
+  fi
+
+  if [ -n "$WORDS" ] && [ "$f" != package-lock.json ] && git show ":$f" | grep -qiE "\b($WORDS)"; then
+    echo "blocked: $f contains a word from the private list:"; git show ":$f" | grep -niE "\b($WORDS)" | head -5; fail=1
+  fi
+done < <(git diff --cached --name-only -z --diff-filter=AM)
+
+exit $fail

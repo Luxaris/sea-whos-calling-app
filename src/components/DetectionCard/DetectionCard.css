@@ -1,0 +1,169 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  background: var(--panel);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  scroll-margin: 16px;
+  cursor: pointer;
+}
+
+.card:hover {
+  border-color: var(--control-border);
+}
+
+/* 2 px primary outline plus a soft 4 px ring */
+.card--selected::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border: 2px solid var(--primary);
+  border-radius: calc(var(--radius) + 1px);
+  box-shadow: 0 0 0 4px var(--primary-ring);
+  pointer-events: none;
+}
+
+.card--new {
+  animation: card-arrive 2.4s ease-out;
+}
+
+@keyframes card-arrive {
+  from {
+    background: var(--primary-tint);
+    transform: translateY(-6px);
+  }
+  20% {
+    transform: none;
+  }
+  to {
+    background: var(--panel);
+  }
+}
+
+/* The recorded demo wants one short slide-down and no lingering highlight. */
+:root[data-demo] .card--new {
+  animation: card-slide-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes card-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card--new,
+  :root[data-demo] .card--new {
+    animation: none;
+  }
+}
+
+.card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.card__name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.card__species {
+  font-size: 19px;
+  line-height: 1.2;
+}
+
+.card__meta {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card__when {
+  flex: none;
+  font-size: 13px;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.card__new-tag {
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.card__where {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 20px;
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.card__dot {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.card__hydrophone {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: 13px;
+  text-align: left;
+  border-radius: 2px;
+}
+
+.card__hydrophone:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+.card__selected {
+  margin-left: auto;
+  color: var(--primary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.card__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 10px;
+}
+
+.card__play {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card__clip {
+  font-size: 13px;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+

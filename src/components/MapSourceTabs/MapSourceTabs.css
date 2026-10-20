@@ -1,0 +1,58 @@
+.map-source {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+}
+
+.map-source__tabs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.map-source__tabs .segmented__legend {
+  margin: 0;
+}
+
+.map-source__tabs .segmented {
+  flex: none;
+}
+
+.map-source__tabs .segmented__option {
+  flex: none;
+  min-height: 36px;
+  padding: 4px 14px;
+  white-space: nowrap;
+}
+
+.map-source__month {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.map-source__step {
+  min-height: 36px;
+  min-width: 36px;
+  padding: 0;
+}
+
+.map-source__step:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.map-source__pick select {
+  min-height: 36px;
+  min-width: 170px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.map-source__hint {
+  flex: 1 1 100%;
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-3);
+}

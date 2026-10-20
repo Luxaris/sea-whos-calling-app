@@ -1,0 +1,60 @@
+.segmented__fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.segmented__legend {
+  margin-bottom: 8px;
+  padding: 0;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.segmented {
+  display: flex;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.segmented__option {
+  position: relative;
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 4px 6px;
+  text-align: center;
+  line-height: 1.15;
+  cursor: pointer;
+  background: var(--panel);
+}
+
+.segmented__option + .segmented__option {
+  border-left: 1px solid var(--control-border);
+}
+
+.segmented__option:hover {
+  background: var(--primary-tint);
+}
+
+.segmented__option.is-checked {
+  background: var(--primary);
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.segmented__option.is-checked svg {
+  stroke: currentColor;
+}
+
+.segmented__option:has(input:focus-visible) {
+  outline: 2px solid var(--primary);
+  outline-offset: -4px;
+  box-shadow: inset 0 0 0 4px #FFFFFF;
+}

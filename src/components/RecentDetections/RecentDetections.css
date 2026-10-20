@@ -1,0 +1,130 @@
+.recent {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.recent__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.recent__title {
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.recent__actions {
+  flex: none;
+  display: flex;
+  gap: 6px;
+}
+
+.recent__pause {
+  flex: none;
+  min-height: 36px;
+  padding: 0 10px;
+}
+
+.recent__collapse {
+  width: 36px;
+  padding: 0;
+}
+
+/* Collapsed: a narrow rail on desktop, a single row when the columns stack. */
+.recent__expand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-control);
+  background: var(--panel);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+  text-align: left;
+}
+
+.recent__expand:hover {
+  border-color: var(--control-border);
+  background: var(--primary-tint);
+}
+
+.recent__rail-label {
+  flex: 1;
+}
+
+.recent__count {
+  min-width: 24px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--page);
+  border: 1px solid var(--hairline);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.recent__chevron {
+  flex: none;
+  color: var(--ink-2);
+}
+
+.recent__chevron--right {
+  transform: rotate(180deg);
+}
+
+/* When stacked the column sits below the map, so the arrows point up and down. */
+@media (max-width: 1099px) {
+  .recent__chevron--left {
+    transform: rotate(90deg);
+  }
+
+  .recent__chevron--right {
+    transform: rotate(-90deg);
+  }
+}
+
+@media (min-width: 1100px) {
+  .recent--collapsed {
+    height: 100%;
+  }
+
+  .recent__expand {
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    min-height: 240px;
+    padding: 12px 0;
+    text-align: center;
+  }
+
+  .recent__rail-label {
+    flex: none;
+    writing-mode: vertical-rl;
+  }
+}
+
+.recent__list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.recent__paused {
+  margin: -4px 0 0;
+  padding: 8px 10px;
+  border-radius: var(--radius-control);
+  background: var(--page);
+  border: 1px solid var(--hairline);
+  font-size: 13px;
+  color: var(--ink-2);
+}

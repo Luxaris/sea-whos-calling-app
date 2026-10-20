@@ -1,0 +1,14 @@
+{
+  "groups": [
+    { "id": "toothed", "label": "Large toothed whales", "legend": "Large toothed whales: killer, sperm", "color": "#2a78d6", "pin": "#256abf", "spectro": "#5598e7" },
+    { "id": "baleen", "label": "Baleen whales", "legend": "Baleen whales: humpback, fin", "color": "#d95926", "pin": "#d95926", "spectro": "#ec835a" },
+    { "id": "dolphin", "label": "Dolphins", "legend": "Dolphins", "color": "#12855e", "pin": "#199e70", "spectro": "#2fc48f" }
+  ],
+  "species": [
+    { "id": "orca", "name": "Killer whale", "shortName": "Killer whale", "group": "toothed", "shape": "harmonics", "freqLabel": "0–16 kHz", "aria": "Spectrogram sketch: stacked harmonics of a pulsed call, rising in pitch" },
+    { "id": "sperm", "name": "Sperm whale", "shortName": "Sperm whale", "group": "toothed", "shape": "clicks", "freqLabel": "0–32 kHz", "aria": "Spectrogram sketch: evenly spaced broadband clicks" },
+    { "id": "humpback", "name": "Humpback whale", "shortName": "Humpback", "group": "baleen", "shape": "moan", "freqLabel": "0–4 kHz", "aria": "Spectrogram sketch: a long, low moan with one faint harmonic" },
+    { "id": "fin", "name": "Fin whale", "shortName": "Fin whale", "group": "baleen", "shape": "pulses", "freqLabel": "0–200 Hz", "aria": "Spectrogram sketch: short, very low pulses repeated at a steady interval" },
+    { "id": "pwsd", "name": "Pacific white-sided dolphin", "shortName": "PW-s dolphin", "group": "dolphin", "shape": "clicktrains", "freqLabel": "0–64 kHz", "aria": "Spectrogram sketch: rapid high-frequency click trains and burst pulses" }
+  ]
+}

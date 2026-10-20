@@ -1,0 +1,23 @@
+{
+  "_note": "Example values only. Coordinates and depths are approximate; hardware fields are placeholders. Replace with ONC device metadata before any real use.",
+  "hydrophones": [
+    { "id": "folger", "name": "Folger Passage", "shortName": "Folger Passage", "network": "ONC NEPTUNE, west coast", "lat": 48.81, "lon": -125.28, "depthM": 100, "status": "online", "dataDelay": "About 4 s",
+      "hardware": { "model": "icListen HF", "sampleRateKHz": 64, "bandLabel": "10 Hz to 32 kHz", "deployed": "2024-06", "lastServiced": "2026-05" } },
+    { "id": "barkley", "name": "Barkley Canyon", "shortName": "Barkley Canyon", "network": "ONC NEPTUNE, west coast", "lat": 48.32, "lon": -126.06, "depthM": 985, "status": "online", "dataDelay": "About 4 s",
+      "hardware": { "model": "icListen HF", "sampleRateKHz": 64, "bandLabel": "10 Hz to 32 kHz", "deployed": "2023-05", "lastServiced": "2026-05" } },
+    { "id": "clayoquot", "name": "Clayoquot Slope", "shortName": "Clayoquot Slope", "network": "ONC NEPTUNE, west coast", "lat": 48.67, "lon": -126.85, "depthM": 1250, "status": "online", "dataDelay": "About 5 s",
+      "hardware": { "model": "icListen HF", "sampleRateKHz": 64, "bandLabel": "10 Hz to 32 kHz", "deployed": "2022-06", "lastServiced": "2025-06" } },
+    { "id": "cascadia", "name": "Cascadia Basin", "shortName": "Cascadia Basin", "network": "ONC NEPTUNE, west coast", "lat": 47.76, "lon": -127.76, "depthM": 2660, "status": "online", "dataDelay": "About 6 s",
+      "hardware": { "model": "icListen HF", "sampleRateKHz": 64, "bandLabel": "10 Hz to 32 kHz", "deployed": "2021-07", "lastServiced": "2025-07" } },
+    { "id": "endeavour", "name": "Endeavour", "shortName": "Endeavour", "network": "ONC NEPTUNE, offshore", "lat": 47.95, "lon": -129.10, "depthM": 2200, "status": "online", "dataDelay": "About 6 s",
+      "hardware": { "model": "icListen HF", "sampleRateKHz": 64, "bandLabel": "10 Hz to 32 kHz", "deployed": "2022-08", "lastServiced": "2025-08" } },
+    { "id": "sogc", "name": "Strait of Georgia Central", "shortName": "SoG Central", "network": "ONC VENUS, Salish Sea", "lat": 49.04, "lon": -123.43, "depthM": 300, "status": "online", "dataDelay": "About 3 s",
+      "hardware": { "model": "icListen HF", "sampleRateKHz": 128, "bandLabel": "10 Hz to 64 kHz", "deployed": "2023-09", "lastServiced": "2026-03" } },
+    { "id": "soge", "name": "Strait of Georgia East", "shortName": "SoG East", "network": "ONC VENUS, Salish Sea", "lat": 49.04, "lon": -123.32, "depthM": 170, "status": "online", "dataDelay": "About 3 s",
+      "hardware": { "model": "icListen HF", "sampleRateKHz": 128, "bandLabel": "10 Hz to 64 kHz", "deployed": "2023-09", "lastServiced": "2026-03" } },
+    { "id": "fraser", "name": "Fraser Delta", "shortName": "Fraser Delta", "network": "ONC VENUS, Salish Sea", "lat": 49.08, "lon": -123.33, "depthM": 140, "status": "offline", "dataDelay": "No data for 2 h",
+      "hardware": { "model": "icListen HF", "sampleRateKHz": 128, "bandLabel": "10 Hz to 64 kHz", "deployed": "2024-04", "lastServiced": "2026-04" } },
+    { "id": "saanich", "name": "Saanich Inlet", "shortName": "Saanich Inlet", "network": "ONC VENUS, Salish Sea", "lat": 48.65, "lon": -123.49, "depthM": 100, "status": "online", "dataDelay": "About 3 s",
+      "hardware": { "model": "icListen HF", "sampleRateKHz": 128, "bandLabel": "10 Hz to 64 kHz", "deployed": "2024-02", "lastServiced": "2026-02" } }
+  ]
+}

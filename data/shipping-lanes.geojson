@@ -1,0 +1,16 @@
+{
+  "type": "FeatureCollection",
+  "_note": "Illustrative lines only, drawn by hand for the demo. Not navigational data. Replace with official traffic separation scheme data before any real use.",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "name": "Inbound lane (illustrative)" },
+      "geometry": { "type": "LineString", "coordinates": [[-125.6, 48.52], [-124.7, 48.42], [-123.9, 48.30], [-123.35, 48.30], [-123.20, 48.55], [-123.22, 48.80], [-123.45, 49.05], [-123.80, 49.30]] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "name": "Outbound lane (illustrative)" },
+      "geometry": { "type": "LineString", "coordinates": [[-125.6, 48.42], [-124.7, 48.32], [-123.9, 48.21], [-123.25, 48.22], [-123.08, 48.55], [-123.10, 48.82], [-123.33, 49.08], [-123.68, 49.33]] }
+    }
+  ]
+}

@@ -1,0 +1,394 @@
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.history__title {
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filters__pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+/* Species dropdown: a button that opens a list of checkboxes. */
+.dropdown {
+  position: relative;
+}
+
+.dropdown__button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 9px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--panel);
+  color: var(--ink);
+  font-size: 14px;
+  text-align: left;
+}
+
+.dropdown__button:focus-visible {
+  outline-offset: 1px;
+}
+
+.dropdown__button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdown__chevron {
+  flex: none;
+  color: var(--ink-2);
+  transition: transform 0.15s;
+}
+
+.dropdown__button[aria-expanded='true'] .dropdown__chevron {
+  transform: rotate(180deg);
+}
+
+.dropdown__panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 20;
+  width: max(100%, 240px);
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
+  background: var(--panel);
+  box-shadow: 0 6px 18px rgba(19, 40, 58, 0.16);
+  color: var(--ink);
+}
+
+.dropdown__option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dropdown__option:hover {
+  background: var(--primary-tint);
+}
+
+.dropdown__name {
+  flex: 1;
+}
+
+/* "Only" shows on the row under the pointer or with keyboard focus inside it. */
+.dropdown__only {
+  min-height: 26px;
+  padding: 0 8px;
+  border: 1px solid var(--control-border);
+  border-radius: 4px;
+  background: var(--panel);
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0;
+}
+
+.dropdown__option:hover .dropdown__only,
+.dropdown__option:focus-within .dropdown__only,
+.dropdown__only:focus-visible {
+  opacity: 1;
+}
+
+.dropdown__only:hover {
+  background: var(--primary-tint);
+}
+
+.dropdown__dot {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.dropdown__actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+  padding-top: 6px;
+  border-top: 1px solid var(--hairline);
+}
+
+.dropdown__actions .btn {
+  flex: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dropdown__chevron {
+    transition: none;
+  }
+}
+
+.dropdown__option input,
+.export__check input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--primary);
+}
+
+/* Results */
+.history__results {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.history__count-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+}
+
+.history__count-row .history__hint {
+  flex: 1 1 auto;
+}
+
+.history__expand {
+  min-height: 30px;
+  padding: 0 10px;
+}
+
+.history__count {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.history__month-line {
+  margin: 0;
+  padding: 10px 12px;
+  border-left: 3px solid var(--primary);
+  background: var(--primary-tint);
+  border-radius: 0 var(--radius-control) var(--radius-control) 0;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.history__hint,
+.history__footnote {
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.history__footnote,
+.history__empty {
+  margin: 0;
+}
+
+.history__empty {
+  padding: 14px;
+  border: 1px dashed var(--control-border);
+  border-radius: var(--radius-control);
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.table-box {
+  max-height: 460px;
+  overflow: auto;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-control);
+}
+
+.table-box--expanded {
+  max-height: calc(100dvh - 190px);
+}
+
+/* Expanded table dialog */
+.history-dialog {
+  width: min(1100px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--ink);
+  box-shadow: 0 16px 48px rgba(19, 40, 58, 0.25);
+}
+
+.history-dialog::backdrop {
+  background: rgba(19, 40, 58, 0.45);
+}
+
+.history-dialog__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+}
+
+.history-dialog__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.history-dialog__head > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+@media (max-width: 600px) {
+  .history-dialog__body {
+    padding: 14px;
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.table th,
+.table td {
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--page);
+  color: var(--ink-2);
+  font-weight: 500;
+}
+
+.table tbody tr {
+  border-top: 1px solid var(--hairline);
+}
+
+.table tbody th {
+  font-weight: 500;
+}
+
+.table .num {
+  text-align: right;
+}
+
+.table .zero {
+  color: var(--ink-3);
+}
+
+.table .total {
+  font-weight: 600;
+}
+
+/* Export */
+.export {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline);
+}
+
+.export__check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.export__check input {
+  margin-top: 2px;
+  flex: none;
+}
+
+.export__row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.export__format {
+  flex: none;
+  width: 110px;
+}
+
+.export__format select {
+  min-height: 44px;
+}
+
+.export__button {
+  flex: 1;
+}
+
+.export__button:disabled {
+  background: var(--control-border);
+  border-color: var(--control-border);
+  color: var(--ink-2);
+}
+
+/* Compact export row inside the expanded table dialog */
+.export--compact {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  padding-top: 12px;
+}
+
+.export--compact .export__check {
+  align-items: center;
+}
+
+.export--compact .export__check input {
+  margin-top: 0;
+}
+
+.export--compact .export__row {
+  align-items: center;
+}
+
+.export--compact .export__format {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  width: auto;
+}
+
+.export--compact .export__format select {
+  min-height: 36px;
+}
+
+.export--compact .export__button {
+  flex: none;
+}

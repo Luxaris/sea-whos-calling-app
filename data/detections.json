@@ -1,0 +1,122 @@
+{
+ "_note": "Example data for the demo feed. live: the cards shown when the page opens. simulationPool: detections the demo feed adds one at a time. No audio ships with the repo: a card plays a silent timer until audioUrl points at a clip (see README, Connecting a backend).",
+ "live": [
+  {
+   "id": "d-1001",
+   "speciesId": "orca",
+   "hydrophoneId": "folger",
+   "timestamp": "2026-10-17T15:06:42-07:00",
+   "confidence": 0.94,
+   "daylight": true,
+   "clipSeconds": 6.8,
+   "reviewStatus": "auto",
+   "audioUrl": null
+  },
+  {
+   "id": "d-1000",
+   "speciesId": "humpback",
+   "hydrophoneId": "barkley",
+   "timestamp": "2026-10-17T14:58:10-07:00",
+   "confidence": 0.88,
+   "daylight": true,
+   "clipSeconds": 12.5,
+   "reviewStatus": "auto",
+   "audioUrl": null
+  },
+  {
+   "id": "d-0999",
+   "speciesId": "pwsd",
+   "hydrophoneId": "sogc",
+   "timestamp": "2026-10-17T14:41:03-07:00",
+   "confidence": 0.71,
+   "daylight": true,
+   "clipSeconds": 7.7,
+   "reviewStatus": "needs_review",
+   "audioUrl": null
+  },
+  {
+   "id": "d-0998",
+   "speciesId": "sperm",
+   "hydrophoneId": "endeavour",
+   "timestamp": "2026-10-17T14:22:51-07:00",
+   "confidence": 0.83,
+   "daylight": true,
+   "clipSeconds": 9.2,
+   "reviewStatus": "needs_review",
+   "audioUrl": null
+  },
+  {
+   "id": "d-0997",
+   "speciesId": "fin",
+   "hydrophoneId": "cascadia",
+   "timestamp": "2026-10-17T13:57:19-07:00",
+   "confidence": 0.66,
+   "daylight": true,
+   "clipSeconds": 8.2,
+   "reviewStatus": "needs_review",
+   "audioUrl": null
+  }
+ ],
+ "simulationPool": [
+  {
+   "id": "sim-1",
+   "speciesId": "orca",
+   "hydrophoneId": "saanich",
+   "confidence": 0.9,
+   "daylight": true,
+   "clipSeconds": 7,
+   "reviewStatus": "auto",
+   "audioUrl": null
+  },
+  {
+   "id": "sim-2",
+   "speciesId": "humpback",
+   "hydrophoneId": "clayoquot",
+   "confidence": 0.79,
+   "daylight": true,
+   "clipSeconds": 12,
+   "reviewStatus": "needs_review",
+   "audioUrl": null
+  },
+  {
+   "id": "sim-3",
+   "speciesId": "pwsd",
+   "hydrophoneId": "soge",
+   "confidence": 0.86,
+   "daylight": true,
+   "clipSeconds": 7.8,
+   "reviewStatus": "auto",
+   "audioUrl": null
+  },
+  {
+   "id": "sim-4",
+   "speciesId": "sperm",
+   "hydrophoneId": "barkley",
+   "confidence": 0.74,
+   "daylight": true,
+   "clipSeconds": 9.6,
+   "reviewStatus": "needs_review",
+   "audioUrl": null
+  },
+  {
+   "id": "sim-5",
+   "speciesId": "fin",
+   "hydrophoneId": "endeavour",
+   "confidence": 0.81,
+   "daylight": true,
+   "clipSeconds": 8.2,
+   "reviewStatus": "needs_review",
+   "audioUrl": null
+  },
+  {
+   "id": "sim-6",
+   "speciesId": "orca",
+   "hydrophoneId": "soge",
+   "confidence": 0.68,
+   "daylight": true,
+   "clipSeconds": 6.6,
+   "reviewStatus": "needs_review",
+   "audioUrl": null
+  }
+ ]
+}

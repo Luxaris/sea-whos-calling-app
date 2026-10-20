@@ -1,0 +1,132 @@
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px;
+  background: var(--panel);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+}
+
+.details__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+}
+
+.details__name {
+  font-size: 24px;
+  line-height: 1.15;
+}
+
+.details__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.details__status--online {
+  color: var(--online-ink);
+}
+
+.details__status--offline {
+  color: var(--offline-ink);
+}
+
+.details__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--online);
+}
+
+.details__network {
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.details__note {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.details__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.details__list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 14px;
+  align-content: start;
+  margin: 0;
+  font-size: 14px;
+}
+
+.details__list dt {
+  color: var(--ink-2);
+}
+
+.details__list dd {
+  margin: 0;
+}
+
+.details__last {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px;
+  border-radius: var(--radius);
+  background: var(--page);
+  border: 1px solid var(--hairline);
+}
+
+.details__last-label,
+.details__meta {
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.details__species {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.details__when {
+  font-size: 14px;
+}
+
+.details__empty {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.details__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.details__actions .btn {
+  font-size: 13px;
+  padding: 0 12px;
+}
+
+.details__playtime {
+  font-size: 13px;
+  color: var(--ink-2);
+}

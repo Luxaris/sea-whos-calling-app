@@ -1,0 +1,38 @@
+/* Design tokens, light theme. Colour is reserved for animals and alerts. */
+:root {
+  --page: #F3F6F8;
+  --panel: #FFFFFF;
+  --hairline: #D7E0E6;
+  --control-border: #C9D3DA;
+  --ink: #13283A;
+  --ink-2: #4D6273;
+  --ink-3: #6A7F8F;
+  --primary: #1F5F8B;        /* buttons, selection ring */
+  --primary-hover: #174C70;
+  --primary-tint: #EAF2F8;
+  --primary-ring: #1F5F8B1F;
+  --spectro-bg: #13283A;     /* spectrogram strips stay dark */
+  --spectro-grid: #22394C;
+  --spectro-label: #9DB3C2;
+
+  /* species groups — validated colour-blind safe as a set of three */
+  --toothed: #2a78d6;  --toothed-pin: #256abf;  --toothed-spectro: #5598e7;
+  --baleen:  #d95926;  --baleen-pin:  #d95926;  --baleen-spectro:  #ec835a;
+  --dolphin: #12855e;  --dolphin-pin: #199e70;  --dolphin-spectro: #2fc48f;
+
+  /* status — always paired with an icon and words */
+  --caution-bg: #FFF4D6; --caution-border: #F0D58A; --caution-ink: #4A3200; --caution-icon: #B07800;
+  --caution-ink-2: #5C4300;
+  --caution-fill: #FAB219;
+  --offline: #C62828; --offline-bg: #FDECEA; --offline-ink: #A11B1B;
+  --online: #0C8A0C; --online-ink: #0A6A0A;
+
+  /* Leaflet-style map controls (from ONC's map) */
+  --map-button: #5AA9D1;
+  --shipping-lane: #5B7A93;
+
+  --font-display: 'Barlow Semi Condensed', system-ui, sans-serif;
+  --font-body: 'Barlow', system-ui, sans-serif;
+  --radius: 8px;
+  --radius-control: 6px;
+}

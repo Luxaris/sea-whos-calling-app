@@ -167,7 +167,7 @@ sea-whos-calling-app/
       liveFeed.ts            useLiveDetections(): simulated feed
     state/
       SelectionContext.tsx   shared selection { detectionId, hydrophoneId }, map focus, card scroll
-    lib/                     helpers; only spectrograms.ts and useHistoryFilters.ts call api.ts
+    lib/                     helpers; only spectrograms.ts, ranked.ts and useHistoryFilters.ts call api.ts
       confidence.ts          high / medium / low rules
       detections.ts          merge live + history, alerts, per-hydrophone summaries, counts
       filters.ts             history filtering, grouping, month line, month counts
@@ -175,6 +175,7 @@ sea-whos-calling-app/
       seasons.ts             Winter Dec–Feb, Spring Mar–May, Summer Jun–Aug, Fall Sep–Nov
       useHistoryFilters.ts   history filter state (called once in App; shared by map and history panel)
       export.ts              CSV / GeoJSON / JSON building and download
+      ranked.ts              top 3 matches and per-group shares for a card
       time.ts                formatting in America/Vancouver time
       usePlayback.ts         plays audioUrl, or simulates with a timer
       spectrograms.ts        optional spectrogram thumbnail lookup
@@ -193,6 +194,7 @@ sea-whos-calling-app/
       MonthStrip/            12-bar "Detections by month" chart in the history panel
       Segmented/             radio group styled as one control
       SpectrogramSketch/     spectrogram strip (thumbnail or plain placeholder)
+      TopMatches/            a card's top 3 matches (species, or groups for muffled audio)
     styles/tokens.css        colours and fonts (source of truth for colours)
     styles/global.css        base styles, buttons, form fields
 ```
@@ -219,6 +221,13 @@ type Detection = {
   clipSeconds: number;        // clip length in seconds (playback stops here)
   audioUrl: string | null;    // playable audio URL, or null to simulate playback
   reviewStatus: ReviewStatus; // required by the type; not read by the UI
+  ranked?: RankedMatch[];     // optional: best matches, best first; the card lists the top 3
+  bandLimited?: boolean;      // optional: muffled clip; the card names the group, not a species
+};
+
+type RankedMatch = {
+  speciesId: SpeciesId;
+  confidence: number;         // 0–1
 };
 
 /** A simulation pool item: the live feed stamps the time when it arrives. */
@@ -253,6 +262,7 @@ type Species = {
   id: SpeciesId;
   name: string;               // "Humpback whale" (cards, details, species filter, export)
   shortName: string;          // "Humpback" (map, table)
+  latin: string;              // "Megaptera novaeangliae" (top matches on a card)
   group: GroupId;             // decides the colour
   shape: string;              // not used by the UI
   freqLabel: string;          // corner label on the spectrogram strip, e.g. "0–4 kHz"
@@ -287,6 +297,8 @@ rows `sim-*`, and simulated history rows `s-*` with `"simulated": true`.
 | `clipSeconds` | > 0 on live detections | Playback ends immediately |
 | `audioUrl` | Browser-playable (WAV, MP3, OGG), same origin or CORS-enabled | Playback stops and resets |
 | `simulated` | Omit, or `false`, on real history rows | The row never gets a spectrogram thumbnail |
+| `ranked` | Best first; the first entry is `speciesId` with its `confidence`; ids from the species list | Fewer than two entries: no list, the card shows the top match only. An unknown id **blanks the page** like `speciesId` |
+| `bandLimited` | `true` only when the clip's high frequencies are cut off | The card names a species the audio cannot support |
 | `Hydrophone.deployed`, `lastServiced` | `"YYYY-MM"` | Shows "Invalid Date" |
 
 ### Optional spectrogram thumbnails
@@ -327,6 +339,16 @@ the results identical.
 - The percentage is `Math.round(confidence * 100)`.
 - The level comes from that rounded number: **high ≥ 85**, **medium 70–84**,
   **low < 70**. So 0.845 shows as "85% high".
+
+**Top matches** (`TopMatches.tsx`, `src/lib/ranked.ts`)
+- A live card with two or more `ranked` entries lists the first three under the
+  hydrophone line: the top match's group first ("Dolphins", then "Top 3"),
+  then each species with its Latin name and percentage. Without `ranked` the
+  card is unchanged: species name and confidence only.
+- A `bandLimited` card never names a species: the heading is the group with the
+  largest share, the silhouette is hidden, and the list adds up `ranked` per
+  group ("Baleen whales 88%"). The meter, like cautions, still shows
+  `confidence`.
 
 **Caution alerts** (`activeAlerts()` in `src/lib/detections.ts`, called in `App.tsx`)
 - Only detections in the **live feed** count, not history.

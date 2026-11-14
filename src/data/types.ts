@@ -21,6 +21,8 @@ export type Species = {
   shape: string;
   freqLabel: string;
   aria: string;
+  /** Scientific name, e.g. "Megaptera novaeangliae"; shown in italics in a card's top matches. */
+  latin: string;
 };
 
 export type Hydrophone = {
@@ -52,6 +54,23 @@ export type Detection = {
   clipSeconds: number;
   audioUrl: string | null;
   reviewStatus: ReviewStatus;
+  /**
+   * Optional. The model's best matches, best first, each with its 0–1 probability; the first is
+   * speciesId. A card lists the top three when there are at least two; without it the card shows
+   * only speciesId and confidence.
+   */
+  ranked?: RankedMatch[];
+  /**
+   * Optional. True when the clip is band-limited (muffled, the high frequencies cut off): the card
+   * names the species group and lists group matches instead of species.
+   */
+  bandLimited?: boolean;
+};
+
+/** One entry of Detection.ranked. */
+export type RankedMatch = {
+  speciesId: SpeciesId;
+  confidence: number; // 0–1
 };
 
 /** A pool item has no timestamp yet; the live feed stamps it when it arrives. */

@@ -1,12 +1,14 @@
 import { forwardRef } from 'react';
-import { getHydrophone, getSpecies } from '../../data/api';
+import { getGroup, getHydrophone, getSpecies } from '../../data/api';
 import type { Detection } from '../../data/types';
+import { groupMatches } from '../../lib/ranked';
 import { SPECIES_ICON } from '../../lib/speciesIcons';
 import { spectrogramFor } from '../../lib/spectrograms';
 import { formatClock, formatDayYear, formatSeconds, relativeTime } from '../../lib/time';
 import { usePlayback } from '../../lib/usePlayback';
 import { ConfidenceMeter } from '../ConfidenceMeter/ConfidenceMeter';
 import { SpectrogramSketch } from '../SpectrogramSketch/SpectrogramSketch';
+import { TopMatches } from '../TopMatches/TopMatches';
 import { PlayIcon, StopIcon } from './icons';
 import './DetectionCard.css';
 
@@ -23,6 +25,11 @@ export const DetectionCard = forwardRef<HTMLElement, Props>(function DetectionCa
   ref,
 ) {
   const species = getSpecies(detection.speciesId);
+  // A band-limited clip is named by its species group, never by a species guess: with ranked
+  // matches, the group with the largest share.
+  const topGroup = detection.bandLimited && detection.ranked?.length ? groupMatches(detection.ranked)[0] : null;
+  const groupId = topGroup?.groupId ?? species.group;
+  const name = detection.bandLimited ? getGroup(groupId).label : species.name;
   const hydrophone = getHydrophone(detection.hydrophoneId);
   const playback = usePlayback(detection.clipSeconds, detection.audioUrl);
   const spectrogram = spectrogramFor(detection);
@@ -43,9 +50,11 @@ export const DetectionCard = forwardRef<HTMLElement, Props>(function DetectionCa
     >
       <div className="card__top">
         <div className="card__name">
-          <img className="species-icon" src={SPECIES_ICON[species.id]} alt="" width="44" height="25" />
+          {!detection.bandLimited && (
+            <img className="species-icon" src={SPECIES_ICON[species.id]} alt="" width="44" height="25" />
+          )}
           <h3 id={headingId} className="card__species">
-            {species.name}
+            {name}
           </h3>
         </div>
         <span className="card__meta">
@@ -57,7 +66,7 @@ export const DetectionCard = forwardRef<HTMLElement, Props>(function DetectionCa
       </div>
 
       <div className="card__where">
-        <span className="card__dot" style={{ background: `var(--${species.group})` }} aria-hidden="true" />
+        <span className="card__dot" style={{ background: `var(--${groupId})` }} aria-hidden="true" />
         <button
           type="button"
           className="card__hydrophone"
@@ -69,13 +78,15 @@ export const DetectionCard = forwardRef<HTMLElement, Props>(function DetectionCa
         {selected && <span className="card__selected">Selected on map</span>}
       </div>
 
+      <TopMatches detection={detection} />
+
       <SpectrogramSketch
         speciesId={detection.speciesId}
         playhead={playback.playing ? playback.progress : null}
         src={spectrogram?.url}
         caption={
           spectrogram
-            ? `${species.name} call, ${getHydrophone(spectrogram.source.hydrophoneId).name}, ${formatDayYear(spectrogram.source.timestamp)}${spectrogram.own ? '' : ' (example)'}`
+            ? `${name} call, ${getHydrophone(spectrogram.source.hydrophoneId).name}, ${formatDayYear(spectrogram.source.timestamp)}${spectrogram.own ? '' : ' (example)'}`
             : undefined
         }
       />
@@ -87,7 +98,7 @@ export const DetectionCard = forwardRef<HTMLElement, Props>(function DetectionCa
             className={`btn ${selected ? 'btn--primary' : 'btn--secondary'}`}
             onClick={playback.toggle}
             aria-pressed={playback.playing}
-            aria-label={playback.playing ? `Stop ${species.name} call` : `Play ${species.name} call`}
+            aria-label={playback.playing ? `Stop ${name} call` : `Play ${name} call`}
           >
             {playback.playing ? <StopIcon /> : <PlayIcon />}
             {playback.playing ? 'Stop' : 'Play call'}

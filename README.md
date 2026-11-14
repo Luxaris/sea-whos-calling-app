@@ -12,8 +12,10 @@ is calling, where, and how sure the model is, so sonar can hold while an animal
 is near and resume as soon as it is not. Fewer animals harmed, fewer delays.
 
 This repository is the public face of the project: the web dashboard. The
-classifier behind it, **Conch**, is proprietary and is not included. See
-[Conch](#conch-the-classifier) for what it does and how it was measured.
+detection pipeline behind it, including the classifier **Conch**, is
+proprietary and is not included. See [Conch and the detection
+pipeline](#2-conch-and-the-detection-pipeline) for what it does and how it
+was measured.
 
 Team: Grace Bertozzi, Jossie Yan, Leanne Farmer, Pranav Rajesh Krishnan,
 Olivia Whitelaw.
@@ -41,7 +43,7 @@ framework and no state library. Exact versions are in `package-lock.json`.
 
 ---
 
-## 2. Conch, the classifier
+## 2. Conch and the detection pipeline
 
 Conch is a purpose-built classifier for marine mammal calls. It was trained on expert-annotated hydrophone recordings from Ocean Networks Canada
 (ONC) and names the species behind a call: Pacific white-sided dolphin, Risso's
@@ -119,6 +121,45 @@ every other public bioacoustics encoder that fits the task. Species named right 
 Every general-purpose model struggles with the two dolphins. The Google whale
 model, trained on eight whale species, is the weakest here even on humpback and blue whales, which
 matches Google's own findings in the Perch marine paper.
+
+### From hydrophone to alert
+
+Naming a call is only half the job: on a live hydrophone nobody has cut the
+call out first. Since the hackathon the project has grown from a classifier
+into a full pipeline that listens to continuous recordings and turns them into
+the detections this dashboard shows.
+
+```mermaid
+flowchart LR
+  A[Continuous hydrophone audio] --> B[Call detector<br/>finds when and at what pitch<br/>something is calling]
+  B --> C[Conch<br/>names the species,<br/>or only its group when unsure]
+  C --> D[Clean-up rules<br/>merge repeats, species-specific checks<br/>for long patterned calls]
+  D --> E[Detections and alerts<br/>this dashboard]
+```
+
+- **Detector.** Scans the whole recording, low rumbles to high whistles and
+  clicks, and marks each stretch that looks like an animal call.
+- **Conch.** Names the species behind each marked call. It is hierarchical:
+  when it is not sure of the species it says the group instead ("baleen whale,
+  species unsure") rather than guessing, and on muffled recordings it only
+  names the group.
+- **Clean-up rules.** Merge calls that belong to one encounter and run extra
+  checks for species whose calls are long and patterned, so one animal does
+  not raise a stack of alerts.
+- **Scoring.** The whole pipeline is scored against ONC's expert annotations
+  on recording days it never saw, the same way it would face a new day of live
+  audio. Rules are fixed before a test is scored and nothing is tuned on the
+  test days.
+
+**What we are working on now**
+
+- Holding up on hydrophones and populations the model has never heard: we
+  test the unchanged pipeline on independent, expert-labelled recordings from
+  other sites.
+- More labelled days without asking experts for more of their time: a
+  listening check where volunteers answer yes / no / unsure on calls the
+  pipeline flags, checked against hidden expert-labelled clips.
+- Connecting the live pipeline to this dashboard (section 8).
 
 ---
 

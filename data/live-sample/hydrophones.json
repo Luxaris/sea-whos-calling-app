@@ -1,0 +1,65 @@
+{
+ "_note": "Oceans 3.0 metadata for the hydrophones in detections.json (locations and deployments services).",
+ "hydrophones": [
+  {
+   "id": "bacnh-h1",
+   "name": "Barkley Canyon Hydrophone A",
+   "shortName": "Barkley A",
+   "network": "ONC NEPTUNE, west coast",
+   "lat": 48.345174,
+   "lon": -126.157316,
+   "depthM": 641,
+   "status": "online",
+   "dataDelay": "About 5 min",
+   "hardware": { "model": "icListen HF", "sampleRateKHz": 256, "bandLabel": "10 Hz to 128 kHz", "deployed": "2021-02", "lastServiced": "2021-02" },
+   "oncLocationCode": "BACNH.H1",
+   "doi": "10.34943/3c560ebd-1a7f-46f1-ab3e-4e0d390ec6b5",
+   "citation": "Ocean Networks Canada Society. 2021. Barkley Canyon Hydrophone Deployed 2021-02-10. Ocean Networks Canada Society. https://doi.org/10.34943/3c560ebd-1a7f-46f1-ab3e-4e0d390ec6b5."
+  },
+  {
+   "id": "bacnh-h2",
+   "name": "Barkley Canyon Hydrophone B",
+   "shortName": "Barkley B",
+   "network": "ONC NEPTUNE, west coast",
+   "lat": 48.345174,
+   "lon": -126.157316,
+   "depthM": 641,
+   "status": "online",
+   "dataDelay": "About 10 min",
+   "hardware": { "model": "icListen HF", "sampleRateKHz": 64, "bandLabel": "10 Hz to 32 kHz", "deployed": "2021-02", "lastServiced": "2021-02" },
+   "oncLocationCode": "BACNH.H2",
+   "doi": "10.34943/fcce9ecb-e0e2-47f9-ae0b-426302b06d67",
+   "citation": "Ocean Networks Canada Society. 2021. Barkley Canyon Hydrophone Deployed 2021-02-10. Ocean Networks Canada Society. https://doi.org/10.34943/fcce9ecb-e0e2-47f9-ae0b-426302b06d67."
+  },
+  {
+   "id": "bacnh-h3",
+   "name": "Barkley Canyon Hydrophone C",
+   "shortName": "Barkley C",
+   "network": "ONC NEPTUNE, west coast",
+   "lat": 48.345174,
+   "lon": -126.157316,
+   "depthM": 641,
+   "status": "online",
+   "dataDelay": "About 10 min",
+   "hardware": { "model": "icListen HF", "sampleRateKHz": 64, "bandLabel": "10 Hz to 32 kHz", "deployed": "2021-02", "lastServiced": "2021-02" },
+   "oncLocationCode": "BACNH.H3",
+   "doi": "10.34943/5bdb2da4-e123-494b-8177-e226bbb716da",
+   "citation": "Ocean Networks Canada Society. 2021. Barkley Canyon Hydrophone Deployed 2021-02-10. Ocean Networks Canada Society. https://doi.org/10.34943/5bdb2da4-e123-494b-8177-e226bbb716da."
+  },
+  {
+   "id": "bacnh-h4",
+   "name": "Barkley Canyon Hydrophone D",
+   "shortName": "Barkley D",
+   "network": "ONC NEPTUNE, west coast",
+   "lat": 48.345174,
+   "lon": -126.157316,
+   "depthM": 641,
+   "status": "online",
+   "dataDelay": "About 10 min",
+   "hardware": { "model": "icListen HF", "sampleRateKHz": 64, "bandLabel": "10 Hz to 32 kHz", "deployed": "2021-02", "lastServiced": "2021-02" },
+   "oncLocationCode": "BACNH.H4",
+   "doi": "10.34943/a0fac23f-f6fe-42c0-9f16-7f4c8410b5a4",
+   "citation": "Ocean Networks Canada Society. 2021. Barkley Canyon Hydrophone Deployed 2021-02-10. Ocean Networks Canada Society. https://doi.org/10.34943/a0fac23f-f6fe-42c0-9f16-7f4c8410b5a4."
+  }
+ ]
+}

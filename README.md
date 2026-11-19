@@ -54,14 +54,17 @@ published. What follows is what we can say about how it performs.
 
 ### Headline
 
-**Conch names the right species 90% of the time**, on 945 expert-labelled calls
-from 12 recording days it never trained on.
+**83 of every 100 calls named exactly right, against 65 for Perch 2.0**, on
+945 expert-labelled calls from 7 recording days Conch never trained on (mean of
+3 training runs of each model).
 
 ### How we measured it
 
-- **Test set.** 945 calls labelled by ONC's experts, from 12 recording days
-  that were held out of training, so no test call comes from an encounter the
-  model has heard before.
+- **Test set.** 945 species-labelled calls from 7 recording days that were held
+  out of training, so the model has never heard those days. These sit inside a
+  held-out split of 12 days and 1,729 clips; the other clips carry only group
+  labels such as "dolphins". Only 7 days is a small sample, and the same split
+  was used repeatedly while the model was being developed.
 - **Benchmark.** We compared against Perch 2.0, Google DeepMind's
   state-of-the-art bioacoustics foundation model, run the way Google recommends
   for marine work: frozen Perch embeddings with a classifier trained on top
@@ -69,54 +72,58 @@ from 12 recording days it never trained on.
   2025, "Perch 2.0 transfers 'whale' to underwater tasks", arXiv:2512.03219).
   Both models learned from the same data and were scored on the same test
   calls.
-- **Two scoring rules.** Under the *species rule* the model must pick one of
-  the seven species, and the 90% above is how often it picks the right one.
-  The stricter *exact rule* requires the most specific correct label. We
-  report both. Killer whales were scored on the three labelled ecotypes (91 calls).
+- **Scoring.** A call counts as right only if the final answer names the
+  expert's species. A group answer such as "dolphins" counts as a miss. Because
+  only 7 days carry species labels, the uncertainty is wide: Conch's 83% has a
+  95% interval of 69 to 91% across days, and its lead over Perch 2.0 is 17.5
+  points (95% interval 9 to 26).
 
 ### Conch vs Perch 2.0
 
 | | Conch | Perch 2.0 |
 |---|---|---|
-| Species named right, species rule | **90%** | 83% |
-| Species named right, exact rule | **84%** | 66% |
-| Macro-F1, exact rule | **0.59** | 0.50 |
+| Species named right | **83%** | 65% |
+| Macro-F1, all 11 labels on all 1,729 test clips | **0.58** | 0.51 |
 
-Per species, exact rule (share of each species' test calls named right):
+Per species (share of each species' test calls named right; Conch and Perch 2.0 are means of 3 runs):
 
-| Species | Conch | Perch 2.0 |
-|---|---|---|
-| Pacific white-sided dolphin | **83%** | 0% |
-| Risso's dolphin | **77%** | 23% |
-| Fin whale | **87%** | 45% |
-| Humpback whale | **95%** | 89% |
-| Sperm whale | **62%** | 57% |
-| Killer whale | **21%** | 16% |
-| Blue whale | **97%** | 92% |
+| Species | Calls | Conch | Perch 2.0 |
+|---|---|---|---|
+| Pacific white-sided dolphin | 23 | **86%** | 16% |
+| Risso's dolphin | 26 | **78%** | 35% |
+| Fin whale | 240 | **88%** | 40% |
+| Humpback whale | 452 | **94%** | 89% |
+| Sperm whale | 69 | 59% | **62%** |
+| Killer whale | 73 | 11% | 11% |
+| Blue whale | 62 | **97%** | 93% |
 
-Conch is ahead on every species and under every rule. Perch 2.0 was built
-mostly from bird and land-animal recordings; it is close on humpback and sperm
-whales and falls furthest behind on the dolphins and the fin whale.
+Conch is ahead on five of the seven species, level on killer whales and
+slightly behind on sperm whales (the intervals overlap broadly). Perch 2.0 was
+built mostly from bird and land-animal recordings; it is close on humpback and
+sperm whales and falls furthest behind on the dolphins and the fin whale.
 
 Killer whales are the hard case for both models: their calls overlap with the
-dolphins', and only a small number of test calls carry an ecotype label. We
-report the number rather than hide it.
+dolphins', and the 73 test calls include 68 from a single day, so no firm
+conclusion about killer whales can be drawn. We report the number rather than
+hide it.
 
 ### Other models we benchmarked
 
 The same protocol (frozen embeddings, a classifier trained on top) applied to
-every other public bioacoustics encoder that fits the task. Species named right under the exact rule, same 945 calls:
+every other public bioacoustics encoder that fits the task. Species named right,
+same 945 calls. Conch, Perch 2.0, BirdNET and the Google whale model are means
+of 3 runs; the other four are single deterministic runs:
 
 | Model | From | Species named right |
 |---|---|---|
-| **Conch** | this project | **84%** |
-| Perch 2.0 | Google DeepMind | 66% |
+| **Conch** | this project | **83%** |
+| Perch 2.0 | Google DeepMind | 65% |
 | BirdNET V2.4 | Cornell Lab of Ornithology / Chemnitz | 64% |
 | Perch 1.0 | Google | 63% |
 | SurfPerch | Google | 63% |
 | BirdAVES | Earth Species Project | 62% |
 | AVES-bio | Earth Species Project | 60% |
-| Google multispecies whale | Google | 43% |
+| Google multispecies whale | Google | 44% |
 
 Every general-purpose model struggles with the two dolphins. The Google whale
 model, trained on eight whale species, is the weakest here even on humpback and blue whales, which
@@ -147,9 +154,67 @@ flowchart LR
   checks for species whose calls are long and patterned, so one animal does
   not raise a stack of alerts.
 - **Scoring.** The whole pipeline is scored against ONC's expert annotations
-  on recording days it never saw, the same way it would face a new day of live
-  audio. Rules are fixed before a test is scored and nothing is tuned on the
-  test days.
+  on recording days the model never trained on, the same way it would face a
+  new day of live audio. Rules are fixed before a test is scored, except the
+  detector thresholds, which were set on the five benchmark days the pipeline
+  is scored on, so those pipeline scores are not a fully blind test.
+
+### Inside the model
+
+**Detector.** A convolutional plus recurrent network that reads the recording
+as a spectrogram and gives a call score every 0.5 seconds. It has two
+branches, one for baleen whales and one for toothed whales (dolphins, sperm and
+killer whales), and the final detector is the average of 3 training runs. Three
+helpers work beside it:
+
+- **Low rumble detector.** A second network of the same kind that listens only
+  to about 5 to 121 Hz, where blue and fin whale calls sit.
+- **Blue whale B call tracker.** Not a trained model: a fixed rule that
+  follows the tone of the B call at 38 to 52 Hz.
+- **Humpback model.** Humpback answers come mostly from Google's public
+  humpback whale model ([Allen et al. 2021](https://doi.org/10.3389/fmars.2021.607321)),
+  which we use as a ready-made component. Where it hears a humpback, its answer
+  replaces ours; where it hears nothing, we keep only our own humpback calls
+  that pass a consistency check.
+
+**Classifier.** Conch looks at every call through four spectrograms of the
+same clip, each tuned to a different kind of sound. One ResNet-18 image
+network, started from ImageNet, reads each view.
+
+| View | Good for | Frequency range | Audio shown |
+|---|---|---|---|
+| Low | blue and fin whale calls, low humpback notes | 10 Hz to 3.2 kHz | 15 s |
+| Rhythm | humpback and killer whale calls, click rhythm, whistles | 50 Hz to 8 kHz | 5 s |
+| High | dolphin clicks and whistles | 1 to 30 kHz | 1.5 s |
+| Click zoom | the shape of a single click, sperm whale clicks | 1 to 32 kHz | 0.05 s |
+
+The four views are joined and feed a species tree: baleen or toothed first,
+then down towards the species. At each group the tree can choose to stop and
+answer with the group instead of guessing, which is where the "species unsure"
+answers above come from.
+
+**Training data.** The classifier learned from expert-labelled call clips from
+two ONC sites, Barkley Canyon (2013 to 2014) and Clayoquot Slope (2025): 11,936
+clips with 11 labels, about 8 hours in all. Clips are split by recording day,
+so a test day is never seen in training; the training part is 8,387 clips,
+about 6 hours. The detectors learned from about 440 hours of raw recordings
+from Barkley Canyon (2013 to 2014): roughly 360 hours from expert-labelled days
+and 80 hours of background from 80 unlabelled days. Apart from the ImageNet
+start and Google's humpback model, no outside audio is used.
+
+### Known limits
+
+- **One main site.** Nearly all training audio comes from Barkley Canyon.
+  Clayoquot Slope adds only toothed whale clicks.
+- **New regions need new labels.** The model does not carry over to a new
+  place for free. At Monterey Bay, killer whale detection was weak until we
+  added labelled recordings from other Canadian hydrophones.
+- **Not yet trialled at sea or in real time.** Every score above comes from
+  recorded days, not a live deployment.
+- **False alerts.** On five held-out days our detector, tuned for about 100
+  alerts an hour that touch no expert-marked call, gave about 115 an hour.
+  Experts mark roughly one call per species per recording, so some of these
+  are real calls nobody labelled, but a person still needs to check alerts.
 
 **What we are working on now**
 
@@ -213,7 +278,7 @@ sea-whos-calling-app/
       detections.ts          merge live + history, alerts, per-hydrophone summaries, counts
       filters.ts             history filtering, grouping, month line, month counts
       periods.ts             whole-month and whole-season ranges (period pickers, map month stepper)
-      seasons.ts             Winter Dec–Feb, Spring Mar–May, Summer Jun–Aug, Fall Sep–Nov
+      seasons.ts             Winter Dec to Feb, Spring Mar to May, Summer Jun to Aug, Fall Sep to Nov
       useHistoryFilters.ts   history filter state (called once in App; shared by map and history panel)
       export.ts              CSV / GeoJSON / JSON building and download
       ranked.ts              top 3 matches and per-group shares for a card
@@ -257,7 +322,7 @@ type Detection = {
   speciesId: SpeciesId;
   hydrophoneId: string;       // must match a Hydrophone.id
   timestamp: string;          // ISO 8601 with offset or Z, e.g. "2026-10-17T15:06:42-07:00"
-  confidence: number;         // 0–1, model probability for speciesId
+  confidence: number;         // 0 to 1, model probability for speciesId
   daylight: boolean;          // true if the sun was up at that hydrophone
   clipSeconds: number;        // clip length in seconds (playback stops here)
   audioUrl: string | null;    // playable audio URL, or null to simulate playback
@@ -268,7 +333,7 @@ type Detection = {
 
 type RankedMatch = {
   speciesId: SpeciesId;
-  confidence: number;         // 0–1
+  confidence: number;         // 0 to 1
 };
 
 /** A simulation pool item: the live feed stamps the time when it arrives. */
@@ -306,7 +371,7 @@ type Species = {
   latin: string;              // "Megaptera novaeangliae" (top matches on a card)
   group: GroupId;             // decides the colour
   shape: string;              // not used by the UI
-  freqLabel: string;          // corner label on the spectrogram strip, e.g. "0–4 kHz"
+  freqLabel: string;          // corner label on the spectrogram strip, e.g. "0 to 4 kHz"
   aria: string;               // not used by the UI
 };
 
@@ -333,7 +398,7 @@ rows `sim-*`, and simulated history rows `s-*` with `"simulated": true`.
 | `hydrophoneId` | Must exist in the hydrophone list | `getHydrophone()` **throws and the page goes blank** |
 | `timestamp` | Parseable by `new Date()`; include an offset or `Z` | Wrong order and ages. Times always display in `America/Vancouver` |
 | `timestamp` | Not in the future relative to the browser clock | Future detections are **excluded from cautions and from "Last detection here"** (clock skew, section 8) |
-| `confidence` | 0–1, not 0–100 | Every level, filter and alert is wrong |
+| `confidence` | 0 to 1, not 0 to 100 | Every level, filter and alert is wrong |
 | `daylight` | Computed by the backend (sunrise/sunset at that hydrophone) | The front end never computes it |
 | `clipSeconds` | > 0 on live detections | Playback ends immediately |
 | `audioUrl` | Browser-playable (WAV, MP3, OGG), same origin or CORS-enabled | Playback stops and resets |
@@ -378,7 +443,7 @@ the results identical.
 
 **Confidence** (`src/lib/confidence.ts`)
 - The percentage is `Math.round(confidence * 100)`.
-- The level comes from that rounded number: **high ≥ 85**, **medium 70–84**,
+- The level comes from that rounded number: **high ≥ 85**, **medium 70 to 84**,
   **low < 70**. So 0.845 shows as "85% high".
 
 **Top matches** (`TopMatches.tsx`, `src/lib/ranked.ts`)
@@ -454,7 +519,7 @@ the results identical.
   the demo clock; all species, all hydrophones, any month, any time of day.
 - Show: Each detection, By day, By month or By season. The grouped views count
   detections per species per period, newest first. Winter belongs to the year
-  it starts ("Winter 2025–26"). By month and By season replace the date inputs
+  it starts ("Winter 2025-26"). By month and By season replace the date inputs
   with month or season selects and widen the range to whole periods.
 - With one hydrophone chosen and a month set, a line gives that month's share
   (or names it the busiest month). With one hydrophone chosen, the MonthStrip
@@ -685,7 +750,7 @@ Layout: three columns at 1100 px and wider (300 px, map, 340 px); the left
 column scrolls on its own and collapses to a 64 px rail. Below 1100 px they
 stack: map, recent detections, history. The map is 560 px tall, 360 px below
 600 px wide; it starts at 48.7° N, 125.8° W, zoom 7 (zoom 6 when the window is
-narrower than 640 px), allows zoom 4–14, and does not zoom on the scroll wheel.
+narrower than 640 px), allows zoom 4 to 14, and does not zoom on the scroll wheel.
 
 ---
 
